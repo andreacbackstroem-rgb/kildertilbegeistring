@@ -1,0 +1,1263 @@
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kilder til begeistring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f9f7f4;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #e0ddd8;
+      --card-radius: 4px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: normal;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+    }
+
+    header p {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    header .submit-btn-top {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 10px 28px;
+      border: 1.5px solid var(--text);
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    header .submit-btn-top:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      width: min(520px, 94vw);
+      padding: 44px 40px 40px;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    .modal h2 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+
+    .modal p.sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .modal label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .modal textarea {
+      width: 100%;
+      height: 130px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      resize: vertical;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal textarea:focus {
+      border-color: #aaa;
+    }
+
+    .modal input[type="text"],
+    .modal input[type="email"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .modal input[type="text"]:focus,
+    .modal input[type="email"]:focus {
+      border-color: #aaa;
+    }
+
+    .sticker-price-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .sticker-price-label {
+      font-size: 0.88rem;
+      color: var(--text);
+      letter-spacing: 0.3px;
+    }
+
+    .sticker-price-amount {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .sticker-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 18px 0 20px;
+    }
+
+    .sticker-card-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .sticker-card-col {
+      flex: 1;
+    }
+
+    .modal .color-section {
+      margin-top: 22px;
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .swatch {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .swatch:hover {
+      transform: scale(1.12);
+    }
+
+    .swatch.selected {
+      border-color: #333;
+    }
+
+    .modal .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn-cancel {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--muted);
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      padding: 8px 4px;
+    }
+
+    .btn-cancel:hover { color: var(--text); }
+
+    .btn-send {
+      padding: 10px 30px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      font-family: inherit;
+      font-size: 0.88rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-send:hover { opacity: 0.8; }
+
+    .modal .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal .close-btn:hover { color: var(--text); }
+
+    /* ── COUNTER BAR ── */
+    .counter-bar {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0;
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .card {
+      aspect-ratio: 3 / 4;
+      padding: 14px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.07);
+      transition: filter 0.18s, transform 0.15s;
+    }
+
+    .card:hover {
+      filter: brightness(0.93);
+      transform: scale(1.018);
+      z-index: 1;
+    }
+
+    .card-title {
+      font-family: 'Georgia', serif;
+      font-size: clamp(0.8rem, 1.4vw, 1rem);
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(110, 22, 22, 0.85);
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+
+    .card-rule {
+      border: none;
+      border-top: 1px solid rgba(110, 22, 22, 0.3);
+      margin: 2px 0;
+      flex-shrink: 0;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 5px 0 4px;
+      border-bottom: 1px solid rgba(110, 22, 22, 0.25);
+      margin-bottom: 7px;
+      flex-shrink: 0;
+    }
+
+    .card-meta-key {
+      font-family: 'Georgia', serif;
+      font-size: 0.52rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(110, 22, 22, 0.5);
+      margin-right: 3px;
+    }
+
+    .card-meta-val {
+      font-family: 'Caveat', cursive;
+      font-size: 0.88rem;
+      color: rgba(110, 22, 22, 0.78);
+    }
+
+    .card-body {
+      flex: 1;
+      border: 1px solid rgba(110, 22, 22, 0.3);
+      padding: 7px 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .card-body p {
+      font-family: 'Georgia', serif;
+      font-size: clamp(0.88rem, 1.4vw, 1.02rem);
+      line-height: 1.55;
+      color: rgba(110, 22, 22, 0.88);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+      word-break: break-word;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .card-footer-label {
+      font-family: 'Georgia', serif;
+      font-size: 0.5rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(110, 22, 22, 0.5);
+      white-space: nowrap;
+    }
+
+    .card-footer-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(110, 22, 22, 0.28);
+    }
+
+    .card-footer-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 0.75rem;
+      color: rgba(110, 22, 22, 0.5);
+      font-style: italic;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox-bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+
+    .lightbox-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .lightbox-card {
+      position: relative;
+      width: min(320px, 84vw);
+      aspect-ratio: 3 / 4;
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .lc-title {
+      font-family: 'Georgia', serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(130, 20, 20, 0.9);
+      margin-bottom: 6px;
+    }
+
+    .lc-rule {
+      border: none;
+      border-top: 1px solid rgba(130, 20, 20, 0.4);
+      margin: 3px 0;
+    }
+
+    .lc-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 9px 0 6px;
+      border-bottom: 1px solid rgba(130, 20, 20, 0.3);
+      margin-bottom: 10px;
+    }
+
+    .lc-meta-key {
+      font-family: 'Georgia', serif;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(130, 20, 20, 0.6);
+      margin-right: 4px;
+    }
+
+    .lc-meta-val {
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      color: rgba(130, 20, 20, 0.85);
+    }
+
+    .lc-body {
+      flex: 1;
+      border: 1px solid rgba(130, 20, 20, 0.35);
+      padding: 14px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .lc-body p {
+      font-family: 'Georgia', serif;
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
+      line-height: 1.65;
+      color: rgba(130, 20, 20, 0.9);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 9;
+      -webkit-box-orient: vertical;
+    }
+
+    .lc-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lc-footer-label {
+      font-family: 'Georgia', serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(130, 20, 20, 0.6);
+      white-space: nowrap;
+    }
+
+    .lc-footer-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(130, 20, 20, 0.35);
+    }
+
+    .lc-footer-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 0.95rem;
+      color: rgba(130, 20, 20, 0.6);
+      font-style: italic;
+    }
+
+    .lightbox .close-lb {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: rgba(130, 20, 20, 0.4);
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .lightbox .close-lb:hover { color: rgba(130, 20, 20, 0.8); }
+
+    .btn-sticker {
+      padding: 9px 26px;
+      border: 1.5px solid rgba(255,255,255,0.65);
+      background: transparent;
+      font-family: 'Georgia', serif;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: rgba(255,255,255,0.8);
+      transition: background 0.2s;
+    }
+
+    .btn-sticker:hover { background: rgba(255,255,255,0.12); }
+
+    /* ── ADMIN PANEL ── */
+    .admin-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 300;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+      overflow-y: auto;
+    }
+
+    .admin-overlay.active { display: flex; }
+
+    .admin-panel {
+      background: #fff;
+      width: min(680px, 100%);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-header h2 {
+      font-size: 0.85rem;
+      font-weight: normal;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .admin-header .close-admin {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .admin-header .close-admin:hover { color: var(--text); }
+
+    .admin-stats {
+      padding: 14px 28px;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 20px;
+    }
+
+    .admin-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .admin-entry:hover { background: var(--bg); }
+
+    .admin-entry-swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .admin-entry-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .admin-entry-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .admin-entry-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+      margin-top: 4px;
+    }
+
+    .admin-del-btn {
+      background: none;
+      border: 1px solid #ddd;
+      padding: 5px 12px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      color: #b00;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .admin-del-btn:hover {
+      background: #b00;
+      color: #fff;
+      border-color: #b00;
+    }
+
+    .admin-empty {
+      padding: 40px 28px;
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .admin-footer {
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin-clear-btn {
+      background: none;
+      border: 1px solid #ddd;
+      padding: 7px 16px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .admin-clear-btn:hover { color: #b00; border-color: #b00; }
+
+    .admin-close-btn {
+      padding: 7px 22px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+
+    .admin-close-btn:hover { opacity: 1; }
+
+    /* ── ADMIN PASSWORD MODAL ── */
+    #admin-pw-modal .modal {
+      width: min(360px, 94vw);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1a1a1a;
+      color: #fff;
+      padding: 12px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 500;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>kilder til begeistring</h1>
+    <p>Del din kilde til begeistring med NRK og få den på skjermen</p>
+    <button class="submit-btn-top" onclick="openModal()">Del din kilde</button>
+  </header>
+
+  <!-- COUNTER -->
+  <div class="counter-bar">
+    <span id="counter">0</span> bidrag
+  </div>
+
+  <!-- GRID -->
+  <main>
+    <div class="grid" id="grid">
+      <div class="empty-state" id="empty-state">
+        Ingen bidrag ennå – vær den første til å dele din kilde til begeistring.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Kilder til begeistring &mdash; delt anonymt
+  </footer>
+
+  <!-- SUBMIT MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="close-btn" onclick="closeModal()" aria-label="Lukk">&times;</button>
+      <h2 id="modal-title">Din kilde til begeistring</h2>
+      <p class="sub">Hva er dine små gleder?</p>
+
+      <label for="msg-input">Skriv her</label>
+      <textarea
+        id="msg-input"
+        placeholder="Lukten av regn på varm asfalt..."
+        maxlength="500"
+      ></textarea>
+
+      <label for="from-input">Fra</label>
+      <input type="text" id="from-input" placeholder="Navn eller kallenavn" maxlength="80" />
+
+      <div class="color-section">
+        <label>Velg en farge</label>
+        <div class="color-swatches" id="color-swatches" role="radiogroup" aria-label="Velg farge">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-cancel" onclick="closeModal()">Avbryt</button>
+        <button class="btn-send" onclick="submit()">Send inn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-bg" onclick="closeLightbox()"></div>
+    <div class="lightbox-wrapper">
+      <div class="lightbox-card" id="lightbox-card">
+        <button class="close-lb" onclick="closeLightbox()" aria-label="Lukk">&times;</button>
+        <div class="lc-title">Kilde</div>
+        <hr class="lc-rule" />
+        <hr class="lc-rule" />
+        <div class="lc-meta">
+          <span><span class="lc-meta-key">Fra:</span> <span class="lc-meta-val" id="lightbox-from"></span></span>
+          <span><span class="lc-meta-key">Dato:</span> <span class="lc-meta-val" id="lightbox-date"></span></span>
+        </div>
+        <div class="lc-body">
+          <p id="lightbox-text"></p>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-footer-label">begeistring</span>
+          <span class="lc-footer-line"></span>
+          <span class="lc-footer-sub">til glede</span>
+        </div>
+      </div>
+      <button class="btn-sticker" onclick="openStickerModal()">Bestill sticker</button>
+    </div>
+  </div>
+
+  <!-- STICKER MODAL -->
+  <div class="modal-overlay" id="sticker-overlay" onclick="handleStickerOverlayClick(event)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="sticker-title">
+      <button class="close-btn" onclick="closeStickerModal()" aria-label="Lukk">&times;</button>
+      <h2 id="sticker-title">Bestill sticker</h2>
+      <p class="sub">Få din kilde til begeistring som et klistremerke i posten.</p>
+
+      <div class="sticker-price-box">
+        <span class="sticker-price-label">20 stickers</span>
+        <span class="sticker-price-amount">59 kr</span>
+      </div>
+
+      <label for="sticker-name">Navn</label>
+      <input type="text" id="sticker-name" placeholder="Ola Nordmann" maxlength="100" />
+
+      <label for="sticker-email">E-post</label>
+      <input type="email" id="sticker-email" placeholder="ola@example.com" maxlength="200" />
+
+      <label for="sticker-address">Adresse</label>
+      <input type="text" id="sticker-address" placeholder="Gata 1, 0123 Oslo" maxlength="200" />
+
+      <hr class="sticker-divider" />
+
+      <label for="sticker-card">Kortnummer</label>
+      <input type="text" id="sticker-card" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" />
+
+      <div class="sticker-card-row">
+        <div class="sticker-card-col">
+          <label for="sticker-expiry">Utløpsdato</label>
+          <input type="text" id="sticker-expiry" placeholder="MM/ÅÅ" maxlength="5" inputmode="numeric" />
+        </div>
+        <div class="sticker-card-col">
+          <label for="sticker-cvc">CVC</label>
+          <input type="text" id="sticker-cvc" placeholder="123" maxlength="4" inputmode="numeric" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-cancel" onclick="closeStickerModal()">Avbryt</button>
+        <button class="btn-send" onclick="submitSticker()">Betal 59 kr</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PASSWORD MODAL -->
+  <div class="modal-overlay" id="admin-pw-modal" onclick="handleAdminPwOverlayClick(event)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-pw-title">
+      <button class="close-btn" onclick="closeAdminPw()" aria-label="Lukk">&times;</button>
+      <h2 id="admin-pw-title">Admin-tilgang</h2>
+      <p class="sub">Skriv inn administratorpassordet.</p>
+      <label for="admin-pw-input">Passord</label>
+      <input type="password" id="admin-pw-input" placeholder="••••••••" maxlength="64"
+        onkeydown="if(event.key==='Enter') verifyAdminPw()" />
+      <div class="actions">
+        <button class="btn-cancel" onclick="closeAdminPw()">Avbryt</button>
+        <button class="btn-send" onclick="verifyAdminPw()">Logg inn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-overlay" id="admin-overlay">
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h2>Admin &mdash; Moderering</h2>
+        <button class="close-admin" onclick="closeAdmin()" aria-label="Lukk">&times;</button>
+      </div>
+      <div class="admin-stats" id="admin-stats"></div>
+      <div id="admin-list"></div>
+      <div class="admin-footer">
+        <button class="admin-clear-btn" onclick="adminClearAll()">Slett alle bidrag</button>
+        <button class="admin-close-btn" onclick="closeAdmin()">Lukk</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">Takk for bidraget ditt!</div>
+
+  <script>
+    const STORAGE_KEY = 'kilder_bidrag';
+
+    const COLORS = [
+      { hex: '#F2C4CE', name: 'Rosa' },
+      { hex: '#FADADD', name: 'Lyserosa' },
+      { hex: '#FFE0B2', name: 'Fersken' },
+      { hex: '#FFF9C4', name: 'Gul' },
+      { hex: '#DCEDC8', name: 'Lysegrønn' },
+      { hex: '#B2DFDB', name: 'Mintgrønn' },
+      { hex: '#B3E5FC', name: 'Lyseblå' },
+      { hex: '#C5CAE9', name: 'Lavendel' },
+      { hex: '#E1BEE7', name: 'Lilla' },
+      { hex: '#D7CCC8', name: 'Beige' },
+      { hex: '#CFD8DC', name: 'Grå' },
+      { hex: '#FFFFFF', name: 'Hvit' },
+    ];
+
+    let selectedColor = COLORS[0].hex;
+    let entries = [];
+
+    function init() {
+      buildSwatches();
+      loadEntries();
+      render();
+    }
+
+    function buildSwatches() {
+      const container = document.getElementById('color-swatches');
+      COLORS.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'swatch' + (i === 0 ? ' selected' : '');
+        btn.style.background = c.hex;
+        btn.title = c.name;
+        btn.setAttribute('aria-label', c.name);
+        btn.onclick = () => selectColor(c.hex, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectColor(hex, btn) {
+      selectedColor = hex;
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function loadEntries() {
+      try {
+        entries = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch { entries = []; }
+    }
+
+    function saveEntries() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    }
+
+    function openModal() {
+      document.getElementById('modal-overlay').classList.add('active');
+      document.getElementById('msg-input').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      document.getElementById('msg-input').value = '';
+      document.getElementById('from-input').value = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function submit() {
+      const text = document.getElementById('msg-input').value.trim();
+      if (!text) {
+        document.getElementById('msg-input').focus();
+        return;
+      }
+
+      const from = document.getElementById('from-input').value.trim() || 'anonym';
+
+      const entry = {
+        id: Date.now(),
+        text,
+        from,
+        color: selectedColor,
+        date: new Date().toISOString()
+      };
+
+      entries.unshift(entry);
+      saveEntries();
+      closeModal();
+      render();
+      showToast('Takk for bidraget ditt!');
+    }
+
+    function render() {
+      const grid = document.getElementById('grid');
+      const empty = document.getElementById('empty-state');
+      const counter = document.getElementById('counter');
+
+      counter.textContent = entries.length.toLocaleString('no-NO');
+      grid.querySelectorAll('.card').forEach(c => c.remove());
+
+      if (entries.length === 0) {
+        empty.style.display = '';
+        return;
+      }
+
+      empty.style.display = 'none';
+      entries.forEach(entry => {
+        const d = new Date(entry.date);
+        const dateStr = d.toLocaleDateString('no-NO', { day: 'numeric', month: 'short' });
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.background = entry.color;
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', entry.text.slice(0, 60));
+        card.innerHTML = `
+          <div class="card-title">Kilde</div>
+          <hr class="card-rule"><hr class="card-rule">
+          <div class="card-meta">
+            <span><span class="card-meta-key">Fra:</span> <span class="card-meta-val">${escapeHtml(entry.from || 'anonym')}</span></span>
+            <span><span class="card-meta-key">Dato:</span> <span class="card-meta-val">${dateStr}</span></span>
+          </div>
+          <div class="card-body"><p>${escapeHtml(entry.text)}</p></div>
+          <div class="card-footer">
+            <span class="card-footer-label">begeistring</span>
+            <span class="card-footer-line"></span>
+            <span class="card-footer-sub">til glede</span>
+          </div>`;
+        card.onclick = () => openLightbox(entry);
+        card.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openLightbox(entry); };
+        grid.appendChild(card);
+      });
+    }
+
+    function openLightbox(entry) {
+      document.getElementById('lightbox-card').style.background = entry.color;
+      document.getElementById('lightbox-text').textContent = entry.text;
+      document.getElementById('lightbox-from').textContent = entry.from || 'anonym';
+      const d = new Date(entry.date);
+      document.getElementById('lightbox-date').textContent =
+        d.toLocaleDateString('no-NO', { day: 'numeric', month: 'short' });
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    function openStickerModal() {
+      closeLightbox();
+      document.getElementById('sticker-overlay').classList.add('active');
+      document.getElementById('sticker-name').focus();
+    }
+
+    function closeStickerModal() {
+      document.getElementById('sticker-overlay').classList.remove('active');
+      ['sticker-name','sticker-email','sticker-address','sticker-card','sticker-expiry','sticker-cvc']
+        .forEach(id => document.getElementById(id).value = '');
+    }
+
+    function handleStickerOverlayClick(e) {
+      if (e.target === document.getElementById('sticker-overlay')) closeStickerModal();
+    }
+
+    function submitSticker() {
+      const name    = document.getElementById('sticker-name').value.trim();
+      const email   = document.getElementById('sticker-email').value.trim();
+      const address = document.getElementById('sticker-address').value.trim();
+      const card    = document.getElementById('sticker-card').value.replace(/\s/g, '');
+      const expiry  = document.getElementById('sticker-expiry').value.trim();
+      const cvc     = document.getElementById('sticker-cvc').value.trim();
+
+      if (!name)            { document.getElementById('sticker-name').focus(); return; }
+      if (!email)           { document.getElementById('sticker-email').focus(); return; }
+      if (!address)         { document.getElementById('sticker-address').focus(); return; }
+      if (card.length < 16) { document.getElementById('sticker-card').focus(); return; }
+      if (expiry.length < 5){ document.getElementById('sticker-expiry').focus(); return; }
+      if (cvc.length < 3)   { document.getElementById('sticker-cvc').focus(); return; }
+
+      closeStickerModal();
+      showToast('Betaling godkjent! 20 stickers sendes til deg.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('sticker-card').addEventListener('input', function () {
+        let v = this.value.replace(/\D/g, '').slice(0, 16);
+        this.value = v.match(/.{1,4}/g)?.join(' ') ?? v;
+      });
+      document.getElementById('sticker-expiry').addEventListener('input', function () {
+        let v = this.value.replace(/\D/g, '').slice(0, 4);
+        if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+        this.value = v;
+      });
+      document.getElementById('sticker-cvc').addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 4);
+      });
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeLightbox();
+        closeStickerModal();
+        closeAdminPw();
+        closeAdmin();
+      }
+    });
+
+    // ── Admin ─────────────────────────────────────────
+    // Bytt ut dette passordet med noe eget:
+    const ADMIN_PASSWORD = 'nrk2025';
+
+    function openAdminPw() {
+      document.getElementById('admin-pw-modal').classList.add('active');
+      setTimeout(() => document.getElementById('admin-pw-input').focus(), 50);
+    }
+
+    function closeAdminPw() {
+      document.getElementById('admin-pw-modal').classList.remove('active');
+      document.getElementById('admin-pw-input').value = '';
+    }
+
+    function handleAdminPwOverlayClick(e) {
+      if (e.target === document.getElementById('admin-pw-modal')) closeAdminPw();
+    }
+
+    function verifyAdminPw() {
+      const val = document.getElementById('admin-pw-input').value;
+      if (val === ADMIN_PASSWORD) {
+        closeAdminPw();
+        openAdmin();
+      } else {
+        const input = document.getElementById('admin-pw-input');
+        input.value = '';
+        input.placeholder = 'Feil passord – prøv igjen';
+        input.focus();
+      }
+    }
+
+    function openAdmin() {
+      renderAdminList();
+      document.getElementById('admin-overlay').classList.add('active');
+    }
+
+    function closeAdmin() {
+      document.getElementById('admin-overlay').classList.remove('active');
+    }
+
+    function renderAdminList() {
+      const list = document.getElementById('admin-list');
+      const stats = document.getElementById('admin-stats');
+      stats.textContent = `${entries.length} bidrag totalt`;
+
+      list.innerHTML = '';
+      if (entries.length === 0) {
+        list.innerHTML = '<div class="admin-empty">Ingen bidrag å vise.</div>';
+        return;
+      }
+
+      entries.forEach(entry => {
+        const d = new Date(entry.date);
+        const dateStr = d.toLocaleDateString('no-NO', { day: 'numeric', month: 'short', year: 'numeric' })
+          + ' ' + d.toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' });
+
+        const row = document.createElement('div');
+        row.className = 'admin-entry';
+        row.dataset.id = entry.id;
+        row.innerHTML = `
+          <div class="admin-entry-swatch" style="background:${entry.color}"></div>
+          <div class="admin-entry-body">
+            <div class="admin-entry-text">${escapeHtml(entry.text)}</div>
+            <div class="admin-entry-meta">${dateStr}</div>
+          </div>
+          <button class="admin-del-btn" onclick="adminDelete(${entry.id})">Slett</button>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function adminDelete(id) {
+      entries = entries.filter(e => e.id !== id);
+      saveEntries();
+      render();
+      renderAdminList();
+    }
+
+    function adminClearAll() {
+      if (!confirm('Slett ALLE bidrag? Dette kan ikke angres.')) return;
+      entries = [];
+      saveEntries();
+      render();
+      renderAdminList();
+      showToast('Alle bidrag er slettet.');
+    }
+
+    // Åpne admin med Ctrl+Shift+A
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        openAdminPw();
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
+```
